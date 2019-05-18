@@ -13,12 +13,12 @@ namespace ReadOnlyData {
 		}
 
 		private static Dictionary<int, string> LayerNamesMap = new Dictionary<int, string>() {
-			{(int)Layers.Default,"Default"},
-			{(int)Layers.TransparentFX,"TransparentFX"},
-			{(int)Layers.IgnoreRaycast, "IgnoreRaycast"},
-			{(int)Layers.Water, "Water"},
-			{(int)Layers.UI,"UI"},
-			{(int)Layers.Ground,"Ground"}
+			[(int)Layers.Default] = "Default",
+			[(int)Layers.TransparentFX] = "TransparentFX",
+			[(int)Layers.IgnoreRaycast] = "IgnoreRaycast",
+			[(int)Layers.Water] = "Water",
+			[(int)Layers.UI] = "UI",
+			[(int)Layers.Ground] = "Ground"
 		};
 
 		public static string GetLayerName(Layers layer) {
