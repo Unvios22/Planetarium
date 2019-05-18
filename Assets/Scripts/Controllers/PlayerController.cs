@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 	[SerializeField] private float moveSpeed = 10;
 	[SerializeField] private float jumpForce = 5;
+	[SerializeField] private GravityAttractor planet;
 	[SerializeField] private float groundCheckDistance;
 	[SerializeField] private FPPCameraController playerCamera;
 	[SerializeField] private Transform cameraAttachPoint;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Update() {
+		
 		//read user axis input
 		var inputX = Input.GetAxisRaw(InputStrings.Axis.Horizontal) * moveSpeed * Time.deltaTime;
 		var inputZ = Input.GetAxisRaw(InputStrings.Axis.Vertical) * moveSpeed * Time.deltaTime;
@@ -56,7 +58,16 @@ public class PlayerController : MonoBehaviour {
 			_rigidbody.drag = inAirDrag;
 		}
 		RotatePlayerToCameraRot();
+		RealignToPlanet();
 		MoveCameraWithPlayer();
+		
+		Debug.Log(_isGrounded);
+	}
+
+	private void RealignToPlanet() {
+		var vectorTowardsPlanet = (planet.transform.position - transform.position).normalized;
+		transform.up = -vectorTowardsPlanet;
+		_playerCameraTransform.up = -vectorTowardsPlanet;
 	}
 
 	private void RotatePlayerToCameraRot() {

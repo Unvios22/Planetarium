@@ -62,7 +62,10 @@ public class FPPCameraController : MonoBehaviour {
 	}
 
 	private void ApplyRotation() {
-		_cameraTransform.rotation = Quaternion.Euler(yRot, xRot,0f);
+		_cameraTransform.RotateAround(_cameraTransform.position, _cameraTransform.up, xRot);
+		_cameraTransform.RotateAround(_cameraTransform.position, _cameraTransform.right, yRot);
+		//TODO: test if works
+		//_cameraTransform.localEulerAngles = new Vector3(yRot, xRot, _cameraTransform.eulerAngles.z);
 		//Y mouse rot = X camera rot
 		//X mouse rot = Y camera rot
 	}
