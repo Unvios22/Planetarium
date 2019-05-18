@@ -1,11 +1,13 @@
 namespace ReadOnlyData {
-	public class InputStrings {
-		public class Axis {
+	public static class InputStrings {
+		public static class Axis {
 			public static readonly string MouseX = "Mouse X";
 			public static readonly string MouseY = "Mouse Y";
+			public static readonly string Horizontal = "Horizontal";
+			public static readonly string Vertical = "Vertical";
 		}
 
-		public class Button {
+		public static class Button {
 			
 		}
 	}
