@@ -6,18 +6,20 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour {
 	[SerializeField] private float moveSpeed = 10;
-	[SerializeField] private float jumpStrength;
+	[SerializeField] private float jumpForce = 5;
 	[SerializeField] private float groundCheckDistance;
 	[SerializeField] private FPPCameraController playerCamera;
 	[SerializeField] private Transform cameraAttachPoint;
 	[SerializeField] private Transform groundChecker;
 	[SerializeField] private bool drawGroundCheckSpehere;
 
+	[SerializeField] private float groundedDrag = 12f;
+	[SerializeField] private float inAirDrag = 0f;
+
 	private Rigidbody _rigidbody;
 	private Transform _playerCameraTransform;
 	private bool _isMoving;
 	private bool _isGrounded;
-	
 	
 	private Vector3 _moveVector;
 
@@ -27,7 +29,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Update() {
-		//read user input
+		//read user axis input
 		var inputX = Input.GetAxisRaw(InputStrings.Axis.Horizontal) * moveSpeed * Time.deltaTime;
 		var inputZ = Input.GetAxisRaw(InputStrings.Axis.Vertical) * moveSpeed * Time.deltaTime;
 
@@ -35,10 +37,6 @@ public class PlayerController : MonoBehaviour {
 		if (inputX == 0 && inputZ == 0) {
 			_isMoving = false;
 		} else {_isMoving = true;}
-		
-		Debug.Log(inputX + "|||" + inputZ);
-		Debug.Log("grounded:" + _isGrounded);
-		Debug.Log("moving:" + _isMoving);
 
 		_isGrounded = Physics.CheckSphere(groundChecker.position, groundCheckDistance, LayerMask.GetMask(PhysicsLayers.GetLayerName(PhysicsLayers.Layers.Ground)));
 		
@@ -46,6 +44,8 @@ public class PlayerController : MonoBehaviour {
 		if (_isMoving && _isGrounded) {
 			_moveVector = transform.TransformDirection(new Vector3(inputX,0, inputZ));
 			//Tranform Direction to convert from localspace to worldspace (used by AddForce)
+
+			_rigidbody.drag = groundedDrag;
 		}
 		else if (_isGrounded) {
 			_rigidbody.velocity = new Vector3(0,_rigidbody.velocity.y, 0);
@@ -53,8 +53,8 @@ public class PlayerController : MonoBehaviour {
 		}
 		else {
 			_moveVector = Vector3.zero;
+			_rigidbody.drag = inAirDrag;
 		}
-		Debug.Log("Move vector:" + _moveVector);
 		RotatePlayerToCameraRot();
 		MoveCameraWithPlayer();
 	}
@@ -71,8 +71,12 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
-		_rigidbody.AddForce(_moveVector,ForceMode.Impulse);
+		_rigidbody.AddForce(_moveVector,ForceMode.VelocityChange);
 		//TODO: Fix player sliding
+		
+		if (Input.GetKey(KeyCode.Space) && _isGrounded) {
+			_rigidbody.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
+		}
 	}
 
 	private void OnDrawGizmos() {
