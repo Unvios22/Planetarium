@@ -307,12 +307,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2f481b2175aed46b166e7d96863564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 1.3
-  maxYTiltAngle: 80
-  minYTiltAngle: -80
+  mouseSensitivity: 80
+  maxY: 80
+  minY: -80
+  maxX: 360
+  minX: 0
   invertYRot: 0
-  _xRot: 0
-  _yRot: 0
+  xRot: 0
+  yRot: 0
 --- !u!1 &1603314286
 GameObject:
   m_ObjectHideFlags: 0

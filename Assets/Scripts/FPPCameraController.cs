@@ -29,8 +29,8 @@ public class FPPCameraController : MonoBehaviour {
 	}
 
 	private void LateUpdate() {
-		var xInputRot = Input.GetAxisRaw(InputStrings.Axis.MouseX) * mouseSensitivity;
-		var yInputRot = Input.GetAxisRaw(InputStrings.Axis.MouseY) * mouseSensitivity;
+		var xInputRot = Input.GetAxisRaw(InputStrings.Axis.MouseX) * mouseSensitivity * Time.deltaTime;
+		var yInputRot = Input.GetAxisRaw(InputStrings.Axis.MouseY) * mouseSensitivity * Time.deltaTime;
 
 		yInputRot = invertYRot ? yInputRot : -yInputRot;
 		//accounting for inverted/not inverted Y axis control
