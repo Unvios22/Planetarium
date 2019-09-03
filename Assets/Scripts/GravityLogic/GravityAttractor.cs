@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UnityEngine {
 	public class GravityAttractor : MonoBehaviour {
 
-		[SerializeField] private float attractorMass;
+		[SerializeField] private float attractionForce = 4;
 		private List<Rigidbody> _attractedBodies = new List<Rigidbody>();
 
 		private void FixedUpdate() {
@@ -13,8 +13,6 @@ namespace UnityEngine {
 				var rigidbodyPosition = attractedRigidbody.position;
 				
 				var forceVector = (attractorPositon - rigidbodyPosition).normalized;
-				var distance = Vector3.Distance(attractorPositon, rigidbodyPosition);
-				var attractionForce = (attractorMass * attractedRigidbody.mass) / (distance * distance);
 				
 				attractedRigidbody.AddForce(forceVector * attractionForce);
 			}

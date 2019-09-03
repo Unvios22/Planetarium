@@ -14,7 +14,9 @@ public class FPPCameraController : MonoBehaviour {
 
 	[SerializeField] private float maxX = 360f;
 	[SerializeField] private float minX = 0f;
-	
+
+	[Range(60f, 120f)]
+	[SerializeField] private float fieldOfView = 75f;
 	[SerializeField] private bool invertYRot;
 	
 	[SerializeField] private float xRot;
@@ -24,7 +26,6 @@ public class FPPCameraController : MonoBehaviour {
 	private Transform _cameraTransform;
 
 	private void Start() {
-		_camera = gameObject.GetComponent<Camera>();
 		_cameraTransform = transform;
 	}
 
@@ -54,7 +55,6 @@ public class FPPCameraController : MonoBehaviour {
 		//In theory: rot 355 + 10 degree input rot in frame = 365 rot -> rounded to 0 with 5 input degree loss
 		if (xRot > maxX) {
 			xRot = minX;
-			
 		} 
 		else if (xRot < minX) {
 			xRot = maxX;
@@ -62,10 +62,9 @@ public class FPPCameraController : MonoBehaviour {
 	}
 
 	private void ApplyRotation() {
-		_cameraTransform.RotateAround(_cameraTransform.position, _cameraTransform.up, xRot);
-		_cameraTransform.RotateAround(_cameraTransform.position, _cameraTransform.right, yRot);
-		//TODO: test if works
-		//_cameraTransform.localEulerAngles = new Vector3(yRot, xRot, _cameraTransform.eulerAngles.z);
+		var newLocalCameraRotation = transform.localRotation;
+		newLocalCameraRotation = Quaternion.Euler(yRot,xRot,newLocalCameraRotation.z);
+		transform.localRotation = newLocalCameraRotation;
 		//Y mouse rot = X camera rot
 		//X mouse rot = Y camera rot
 	}
@@ -73,5 +72,10 @@ public class FPPCameraController : MonoBehaviour {
 	public void RotateTo(float xRot, float yRot) {
 		this.xRot = xRot;
 		this.yRot = yRot;
+	}
+
+	private void OnValidate() {
+		_camera = gameObject.GetComponent<Camera>();
+		_camera.fieldOfView = fieldOfView;
 	}
 }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using ReadOnlyData;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static ReadOnlyData.PhysicsLayers.Layers;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour {
@@ -12,8 +14,12 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private FPPCameraController playerCamera;
 	[SerializeField] private Transform cameraAttachPoint;
 	[SerializeField] private Transform groundChecker;
+	[SerializeField] private float jumpTimeBuffer = 1f;
+	
 	[SerializeField] private bool drawGroundCheckSpehere;
-
+	[SerializeField] private bool isPlanetPresent = true;
+	[SerializeField] private bool canJump = true;
+	
 	[SerializeField] private float groundedDrag = 12f;
 	[SerializeField] private float inAirDrag = 0f;
 
@@ -40,12 +46,12 @@ public class PlayerController : MonoBehaviour {
 			_isMoving = false;
 		} else {_isMoving = true;}
 
-		_isGrounded = Physics.CheckSphere(groundChecker.position, groundCheckDistance, LayerMask.GetMask(PhysicsLayers.GetLayerName(PhysicsLayers.Layers.Ground)));
+		_isGrounded = Physics.CheckSphere(groundChecker.position, groundCheckDistance, LayerMask.GetMask(PhysicsLayers.GetLayerName(Ground)));
 		
 		//apply movement logic
 		if (_isMoving && _isGrounded) {
 			_moveVector = transform.TransformDirection(new Vector3(inputX,0, inputZ));
-			//Tranform Direction to convert from localspace to worldspace (used by AddForce)
+			//"TranformDirection" to convert from localspace to worldspace (used by AddForce)
 
 			_rigidbody.drag = groundedDrag;
 		}
@@ -58,10 +64,20 @@ public class PlayerController : MonoBehaviour {
 			_rigidbody.drag = inAirDrag;
 		}
 		RotatePlayerToCameraRot();
-		RealignToPlanet();
+		if (isPlanetPresent) {
+			RealignToPlanet();
+		}
 		MoveCameraWithPlayer();
 		
-		Debug.Log(_isGrounded);
+		Debug.Log("is grounded: " + _isGrounded);
+	}
+	
+	private void RotatePlayerToCameraRot() {
+		var cameraYRot = _playerCameraTransform.localEulerAngles.y;
+		Debug.Log(cameraYRot);
+		var playerRotation = transform.rotation;
+		var newPlayerRotation = Quaternion.Euler(playerRotation.x, cameraYRot, playerRotation.z);
+		transform.rotation = newPlayerRotation;
 	}
 
 	private void RealignToPlanet() {
@@ -70,23 +86,30 @@ public class PlayerController : MonoBehaviour {
 		_playerCameraTransform.up = -vectorTowardsPlanet;
 	}
 
-	private void RotatePlayerToCameraRot() {
-		var cameraYRot = _playerCameraTransform.localEulerAngles.y;
-		var playerRotation = transform.rotation;
-		var newPlayerRotation = Quaternion.Euler(playerRotation.x, cameraYRot, playerRotation.z);
-		transform.rotation = newPlayerRotation;
-	}
-
 	private void MoveCameraWithPlayer() {
 		_playerCameraTransform.position = cameraAttachPoint.position;
 	}
 
 	private void FixedUpdate() {
+		//apply player movement in physics
 		_rigidbody.AddForce(_moveVector,ForceMode.VelocityChange);
 		//TODO: Fix player sliding
 		
-		if (Input.GetKey(KeyCode.Space) && _isGrounded) {
+		if (Input.GetKey(KeyCode.Space) && _isGrounded && canJump) {
 			_rigidbody.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
+			canJump = false;
+			StartCoroutine(PlayerInAir());
+		}
+	}
+
+	private IEnumerator PlayerInAir() {
+		yield return new WaitForSeconds(jumpTimeBuffer);
+		for (;;) {
+			if (_isGrounded) {
+				canJump = true;
+				yield break;
+			}
+			yield return null;
 		}
 	}
 
