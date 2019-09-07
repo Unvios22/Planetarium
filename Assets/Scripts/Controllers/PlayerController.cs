@@ -24,7 +24,9 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private float inAirDrag = 0f;
 
 	private Rigidbody _rigidbody;
+//	private Transform _playerParentTransform;
 	private Transform _playerCameraTransform;
+	private Transform _playerCameraParent;
 	private bool _isMoving;
 	private bool _isGrounded;
 	
@@ -32,11 +34,12 @@ public class PlayerController : MonoBehaviour {
 
 	private void Start() {
 		_rigidbody = gameObject.GetComponent<Rigidbody>();
+//		_playerParentTransform = transform.parent;
 		_playerCameraTransform = playerCamera.transform;
+		_playerCameraParent = _playerCameraTransform.parent;
 	}
 
 	private void Update() {
-		
 		//read user axis input
 		var inputX = Input.GetAxisRaw(InputStrings.Axis.Horizontal) * moveSpeed * Time.deltaTime;
 		var inputZ = Input.GetAxisRaw(InputStrings.Axis.Vertical) * moveSpeed * Time.deltaTime;
@@ -63,27 +66,25 @@ public class PlayerController : MonoBehaviour {
 			_moveVector = Vector3.zero;
 			_rigidbody.drag = inAirDrag;
 		}
-		RotatePlayerToCameraRot();
 		if (isPlanetPresent) {
-			RealignToPlanet();
+			var vectorTowardsPlanet = (planet.transform.position - transform.position).normalized;
+			RealignPlayerRotation(-vectorTowardsPlanet);
+			_playerCameraParent.up = -vectorTowardsPlanet;
+		}
+		else {
+			RealignPlayerRotation(Vector3.up);
 		}
 		MoveCameraWithPlayer();
 		
 		Debug.Log("is grounded: " + _isGrounded);
-	}
-	
-	private void RotatePlayerToCameraRot() {
-		var cameraYRot = _playerCameraTransform.localEulerAngles.y;
-		Debug.Log(cameraYRot);
-		var playerRotation = transform.rotation;
-		var newPlayerRotation = Quaternion.Euler(playerRotation.x, cameraYRot, playerRotation.z);
-		transform.rotation = newPlayerRotation;
+		Debug.Log(_rigidbody.velocity);
 	}
 
-	private void RealignToPlanet() {
-		var vectorTowardsPlanet = (planet.transform.position - transform.position).normalized;
-		transform.up = -vectorTowardsPlanet;
-		_playerCameraTransform.up = -vectorTowardsPlanet;
+	private void RealignPlayerRotation(Vector3 upwardsDirection) {
+		var playerCameraForward = _playerCameraTransform.forward;
+		var newPlayerRot = Quaternion.LookRotation(upwardsDirection, -playerCameraForward)
+		                   * Quaternion.AngleAxis(90f, Vector3.right);
+		transform.localRotation = newPlayerRot;
 	}
 
 	private void MoveCameraWithPlayer() {
