@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private float inAirDrag = 0f;
 
 	private Rigidbody _rigidbody;
-//	private Transform _playerParentTransform;
 	private Transform _playerCameraTransform;
 	private Transform _playerCameraParent;
 	private bool _isMoving;
@@ -34,7 +33,6 @@ public class PlayerController : MonoBehaviour {
 
 	private void Start() {
 		_rigidbody = gameObject.GetComponent<Rigidbody>();
-//		_playerParentTransform = transform.parent;
 		_playerCameraTransform = playerCamera.transform;
 		_playerCameraParent = _playerCameraTransform.parent;
 	}
@@ -66,6 +64,8 @@ public class PlayerController : MonoBehaviour {
 			_moveVector = Vector3.zero;
 			_rigidbody.drag = inAirDrag;
 		}
+		
+		//update rotations on player & camera
 		if (isPlanetPresent) {
 			var vectorTowardsPlanet = (planet.transform.position - transform.position).normalized;
 			RealignPlayerRotation(-vectorTowardsPlanet);
@@ -74,10 +74,11 @@ public class PlayerController : MonoBehaviour {
 		else {
 			RealignPlayerRotation(Vector3.up);
 		}
+		
+		//update camera position
 		MoveCameraWithPlayer();
 		
 		Debug.Log("is grounded: " + _isGrounded);
-		Debug.Log(_rigidbody.velocity);
 	}
 
 	private void RealignPlayerRotation(Vector3 upwardsDirection) {
