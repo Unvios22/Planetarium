@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour {
 		var inputX = Input.GetAxisRaw(InputStrings.Axis.Horizontal) * moveSpeed * Time.deltaTime;
 		var inputZ = Input.GetAxisRaw(InputStrings.Axis.Vertical) * moveSpeed * Time.deltaTime;
 
+		inputX = 1;
+
 		//set move metadata booleans
 		if (inputX == 0 && inputZ == 0) {
 			_isMoving = false;
