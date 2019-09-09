@@ -9,69 +9,62 @@ using UnityEngine.Serialization;
 public class FPPCameraController : MonoBehaviour {
 
 	[SerializeField] private float mouseSensitivity;
-	[SerializeField] private float maxY = 80f;
-	[SerializeField] private float minY = -80f;
-
-	[SerializeField] private float maxX = 360f;
-	[SerializeField] private float minX = 0f;
+	
+	[SerializeField] private float maxX = 80f;
+	[SerializeField] private float minX = -80f;
 
 	[Range(60f, 120f)]
 	[SerializeField] private float fieldOfView = 75f;
 	[SerializeField] private bool invertYRot;
 	
-	[SerializeField] private float xRot;
-	[SerializeField] private float yRot;
-
 	private Camera _camera;
-	private Transform _cameraTransform;
-
-	private void Start() {
-		_cameraTransform = transform;
-	}
 
 	private void LateUpdate() {
-		var xInputRot = Input.GetAxisRaw(InputStrings.Axis.MouseX) * mouseSensitivity * Time.deltaTime;
-		var yInputRot = Input.GetAxisRaw(InputStrings.Axis.MouseY) * mouseSensitivity * Time.deltaTime;
+		var xMouseInputRot = Input.GetAxisRaw(InputStrings.Axis.MouseX) * mouseSensitivity * Time.deltaTime;
+		var yMouseInputRot = Input.GetAxisRaw(InputStrings.Axis.MouseY) * mouseSensitivity * Time.deltaTime;
 
-		yInputRot = invertYRot ? yInputRot : -yInputRot;
+		yMouseInputRot = invertYRot ? yMouseInputRot : -yMouseInputRot;
 		//accounting for inverted/not inverted Y axis control
 		
-		xRot += xInputRot;
-		yRot += yInputRot;
-
-		ApplyRotConstraints();
-		ApplyRotation();
-	}
-
-	private void ApplyRotConstraints() {
-		if (yRot > maxY) {
-			yRot = maxY;
-		} 
-		else if (yRot < minY) {
-			yRot = minY;
-		}
-		
-		//TODO: possible user input loss
-		//In theory: rot 355 + 10 degree input rot in frame = 365 rot -> rounded to 0 with 5 input degree loss
-		if (xRot > maxX) {
-			xRot = minX;
-		} 
-		else if (xRot < minX) {
-			xRot = maxX;
-		}
-	}
-
-	private void ApplyRotation() {
-		var newLocalCameraRotation = transform.localRotation;
-		newLocalCameraRotation = Quaternion.Euler(yRot,xRot,newLocalCameraRotation.z);
-		transform.localRotation = newLocalCameraRotation;
+		var xCameraInputRot = yMouseInputRot;
 		//Y mouse rot = X camera rot
+		
+		var yCameraInputRot = xMouseInputRot;
 		//X mouse rot = Y camera rot
+		
+		ApplyRotation(xCameraInputRot, yCameraInputRot);
+		ApplyRotConstraints(xCameraInputRot);
 	}
 	
-	public void RotateTo(float xRot, float yRot) {
-		this.xRot = xRot;
-		this.yRot = yRot;
+	private void ApplyRotation(float xRot, float yRot) {
+		var localCameraRotation = transform.localEulerAngles;
+		var totalXRot = localCameraRotation.x + xRot;
+		var totalYRot = localCameraRotation.y + yRot;
+		transform.localRotation = Quaternion.Euler(totalXRot,totalYRot,localCameraRotation.z);
+	}
+
+	private void ApplyRotConstraints(float userInputXRot) {
+		var startingRotation = transform.localEulerAngles;
+		var xRot = startingRotation.x;
+
+		if (xRot > maxX) {
+			
+		}
+		
+		Debug.Log(xRot);
+//		Debug.Log("internal max: " + _internalMaxX);
+//		Debug.Log("internal min: " + _internalMinX);
+//		if (xRot < _internalMaxX && xRot > _internalMinX && userInputXRot < 0) {
+//			xRot = _internalMaxX;
+//			Debug.Log("Too high!");
+//		} 
+//		else if (xRot > _internalMinX && xRot < _internalMaxX && userInputXRot > 0) {
+//			xRot = _internalMinX;
+//			Debug.Log("Too low!");
+//		}
+
+		var correctedRotation = Quaternion.Euler(xRot, startingRotation.y, startingRotation.z);
+		transform.localRotation = correctedRotation;
 	}
 
 	private void OnValidate() {

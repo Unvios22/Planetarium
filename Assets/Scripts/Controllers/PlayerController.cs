@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using ReadOnlyData;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static ReadOnlyData.PhysicsLayers.Layers;
 
@@ -16,7 +14,7 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private Transform groundChecker;
 	[SerializeField] private float jumpTimeBuffer = 1f;
 	
-	[SerializeField] private bool drawGroundCheckSpehere;
+	[SerializeField] private bool drawGroundCheckSphere;
 	[SerializeField] private bool isPlanetPresent = true;
 	[SerializeField] private bool canJump = true;
 	
@@ -41,8 +39,6 @@ public class PlayerController : MonoBehaviour {
 		//read user axis input
 		var inputX = Input.GetAxisRaw(InputStrings.Axis.Horizontal) * moveSpeed * Time.deltaTime;
 		var inputZ = Input.GetAxisRaw(InputStrings.Axis.Vertical) * moveSpeed * Time.deltaTime;
-
-		inputX = 1;
 
 		//set move metadata booleans
 		if (inputX == 0 && inputZ == 0) {
@@ -71,7 +67,8 @@ public class PlayerController : MonoBehaviour {
 		if (isPlanetPresent) {
 			var vectorTowardsPlanet = (planet.transform.position - transform.position).normalized;
 			RealignPlayerRotation(-vectorTowardsPlanet);
-			_playerCameraParent.up = -vectorTowardsPlanet;
+			_playerCameraParent.rotation = Quaternion.LookRotation(-vectorTowardsPlanet, -transform.forward)
+			                   * Quaternion.AngleAxis(90f, Vector3.right);
 		}
 		else {
 			RealignPlayerRotation(Vector3.up);
@@ -79,8 +76,6 @@ public class PlayerController : MonoBehaviour {
 		
 		//update camera position
 		MoveCameraWithPlayer();
-		
-		Debug.Log("is grounded: " + _isGrounded);
 	}
 
 	private void RealignPlayerRotation(Vector3 upwardsDirection) {
@@ -119,7 +114,7 @@ public class PlayerController : MonoBehaviour {
 
 	private void OnDrawGizmos() {
 		Gizmos.color = Color.red;
-		if (drawGroundCheckSpehere) {
+		if (drawGroundCheckSphere) {
 			Gizmos.DrawWireSphere(groundChecker.position,groundCheckDistance);
 		}
 	}
