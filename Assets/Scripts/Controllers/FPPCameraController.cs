@@ -18,6 +18,12 @@ public class FPPCameraController : MonoBehaviour {
 	[SerializeField] private bool invertYRot;
 	
 	private Camera _camera;
+	private float _totalXRotCache;
+
+	public void ClearYRotation() {
+		var localRotationAngles = transform.localEulerAngles;
+		transform.localRotation = Quaternion.Euler(localRotationAngles.x, 0f, localRotationAngles.z);
+	}
 
 	private void LateUpdate() {
 		var xMouseInputRot = Input.GetAxisRaw(InputStrings.Axis.MouseX) * mouseSensitivity * Time.deltaTime;
@@ -32,8 +38,11 @@ public class FPPCameraController : MonoBehaviour {
 		var yCameraInputRot = xMouseInputRot;
 		//X mouse rot = Y camera rot
 		
+		_totalXRotCache += xCameraInputRot;
+		//caching total X rotation to easily control maxX & minX rot
+		
+		xCameraInputRot = ApplyXRotConstraints(xCameraInputRot);
 		ApplyRotation(xCameraInputRot, yCameraInputRot);
-		ApplyRotConstraints(xCameraInputRot);
 	}
 	
 	private void ApplyRotation(float xRot, float yRot) {
@@ -43,32 +52,28 @@ public class FPPCameraController : MonoBehaviour {
 		transform.localRotation = Quaternion.Euler(totalXRot,totalYRot,localCameraRotation.z);
 	}
 
-	private void ApplyRotConstraints(float userInputXRot) {
-		var startingRotation = transform.localEulerAngles;
-		var xRot = startingRotation.x;
-
-		if (xRot > maxX) {
-			
+	private float ApplyXRotConstraints(float xInputRot) {
+		//camera too low
+		if (_totalXRotCache > maxX) {
+			Debug.Log("Too low!");
+			xInputRot = xInputRot - (_totalXRotCache - maxX);
+			_totalXRotCache = maxX;
+			return xInputRot ;
 		}
-		
-		Debug.Log(xRot);
-//		Debug.Log("internal max: " + _internalMaxX);
-//		Debug.Log("internal min: " + _internalMinX);
-//		if (xRot < _internalMaxX && xRot > _internalMinX && userInputXRot < 0) {
-//			xRot = _internalMaxX;
-//			Debug.Log("Too high!");
-//		} 
-//		else if (xRot > _internalMinX && xRot < _internalMaxX && userInputXRot > 0) {
-//			xRot = _internalMinX;
-//			Debug.Log("Too low!");
-//		}
-
-		var correctedRotation = Quaternion.Euler(xRot, startingRotation.y, startingRotation.z);
-		transform.localRotation = correctedRotation;
+		//camera too high
+		if (_totalXRotCache < minX) {
+			Debug.Log("Too high!");
+			xInputRot = xInputRot + (minX - _totalXRotCache);
+			_totalXRotCache = minX;
+			return xInputRot ;
+		}
+		return xInputRot;
 	}
 
 	private void OnValidate() {
 		_camera = gameObject.GetComponent<Camera>();
 		_camera.fieldOfView = fieldOfView;
+		maxX = Mathf.Clamp(maxX, 0f, 90f);
+		minX = Mathf.Clamp(minX, -90f, 0);
 	}
 }

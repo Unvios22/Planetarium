@@ -67,8 +67,7 @@ public class PlayerController : MonoBehaviour {
 		if (isPlanetPresent) {
 			var vectorTowardsPlanet = (planet.transform.position - transform.position).normalized;
 			RealignPlayerRotation(-vectorTowardsPlanet);
-			_playerCameraParent.rotation = Quaternion.LookRotation(-vectorTowardsPlanet, -transform.forward)
-			                   * Quaternion.AngleAxis(90f, Vector3.right);
+			RealignCameraRotation(-vectorTowardsPlanet);
 		}
 		else {
 			RealignPlayerRotation(Vector3.up);
@@ -77,12 +76,21 @@ public class PlayerController : MonoBehaviour {
 		//update camera position
 		MoveCameraWithPlayer();
 	}
-
+	
 	private void RealignPlayerRotation(Vector3 upwardsDirection) {
+		//realignes player up to upwardsDirection (exactly) and player forward to camera forward (as close as possible)
 		var playerCameraForward = _playerCameraTransform.forward;
 		var newPlayerRot = Quaternion.LookRotation(upwardsDirection, -playerCameraForward)
 		                   * Quaternion.AngleAxis(90f, Vector3.right);
 		transform.localRotation = newPlayerRot;
+	}
+
+	private void RealignCameraRotation(Vector3 upwardsDirection) {
+		//realignes camera parent up to upwardsDirection (exactly) and camera parent forward to player forward (as close as possible)
+		_playerCameraParent.rotation = Quaternion.LookRotation(upwardsDirection, -transform.forward)
+		                               * Quaternion.AngleAxis(90f, Vector3.right);
+		playerCamera.ClearYRotation();
+		//clearing yRot on camera to avoid cameraParent and camera chasing each other each frame (spinning out of control)
 	}
 
 	private void MoveCameraWithPlayer() {

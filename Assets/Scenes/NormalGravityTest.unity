@@ -392,6 +392,11 @@ PrefabInstance:
       propertyPath: maxX
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 5725679811637138420, guid: 0bdfcfa1032c23344b5935672d90daaf,
+        type: 3}
+      propertyPath: minX
+      value: -80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bdfcfa1032c23344b5935672d90daaf, type: 3}
 --- !u!1001 &7045162004435396801
