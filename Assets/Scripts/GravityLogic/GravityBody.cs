@@ -1,3 +1,4 @@
+using System;
 using ReadOnlyData;
 namespace UnityEngine {
 	
@@ -9,6 +10,10 @@ namespace UnityEngine {
 			_rigidbody = gameObject.GetComponent<Rigidbody>();
 			_gravityAttractor = GameObject.FindGameObjectWithTag(Tags.GRAVITY_ATTRACTOR).GetComponent<GravityAttractor>();
 			_gravityAttractor.AddAttractedRigidbody(_rigidbody);
+		}
+
+		private void OnDestroy() {
+			_gravityAttractor.RemoveAttractedRigidbody(_rigidbody);
 		}
 	}
 }

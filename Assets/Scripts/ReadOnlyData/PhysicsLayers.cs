@@ -9,7 +9,8 @@ namespace ReadOnlyData {
 			IgnoreRaycast = 2,
 			Water = 4,
 			UI = 5,
-			Ground = 8
+			Ground = 8,
+			Seeds = 9
 		}
 
 		private static Dictionary<int, string> LayerNamesMap = new Dictionary<int, string>() {
@@ -18,7 +19,8 @@ namespace ReadOnlyData {
 			[(int)Layers.IgnoreRaycast] = "IgnoreRaycast",
 			[(int)Layers.Water] = "Water",
 			[(int)Layers.UI] = "UI",
-			[(int)Layers.Ground] = "Ground"
+			[(int)Layers.Ground] = "Ground",
+			[(int)Layers.Seeds] = "Seeds"
 		};
 
 		public static string GetLayerName(Layers layer) {
