@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour {
 			_rigidbody.drag = groundedDrag;
 		}
 		else if (_isGrounded) {
-			_rigidbody.velocity = new Vector3(0,_rigidbody.velocity.y, 0);
+			_rigidbody.velocity = new Vector3(0,0, 0);
 			_moveVector = Vector3.zero;
 		}
 		else {
