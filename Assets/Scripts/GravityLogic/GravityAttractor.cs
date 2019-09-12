@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 namespace UnityEngine {
 	public class GravityAttractor : MonoBehaviour {
 
@@ -9,10 +7,10 @@ namespace UnityEngine {
 
 		private void FixedUpdate() {
 			foreach (var attractedRigidbody in _attractedBodies) {
-				var attractorPositon = transform.position;
+				var attractorPosition = transform.position;
 				var rigidbodyPosition = attractedRigidbody.position;
 				
-				var forceVector = (attractorPositon - rigidbodyPosition).normalized;
+				var forceVector = (attractorPosition - rigidbodyPosition).normalized;
 				
 				attractedRigidbody.AddForce(forceVector * attractionForce);
 			}

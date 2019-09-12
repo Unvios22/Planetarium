@@ -1,6 +1,4 @@
-using System;
 using ReadOnlyData;
-using UnityEngine;
 namespace UnityEngine {
 	
 	[RequireComponent(typeof(Rigidbody))]

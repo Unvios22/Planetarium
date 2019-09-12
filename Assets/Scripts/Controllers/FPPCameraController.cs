@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using ReadOnlyData;
+﻿using ReadOnlyData;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Camera))]
 public class FPPCameraController : MonoBehaviour {
@@ -55,15 +51,13 @@ public class FPPCameraController : MonoBehaviour {
 	private float ApplyXRotConstraints(float xInputRot) {
 		//camera too low
 		if (_totalXRotCache > maxX) {
-			Debug.Log("Too low!");
-			xInputRot = xInputRot - (_totalXRotCache - maxX);
+			xInputRot -= (_totalXRotCache - maxX);
 			_totalXRotCache = maxX;
 			return xInputRot ;
 		}
 		//camera too high
 		if (_totalXRotCache < minX) {
-			Debug.Log("Too high!");
-			xInputRot = xInputRot + (minX - _totalXRotCache);
+			xInputRot += (minX - _totalXRotCache);
 			_totalXRotCache = minX;
 			return xInputRot ;
 		}
