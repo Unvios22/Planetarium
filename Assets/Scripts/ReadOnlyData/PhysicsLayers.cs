@@ -10,7 +10,7 @@ namespace ReadOnlyData {
 			Water = 4,
 			UI = 5,
 			Ground = 8,
-			Seeds = 9
+			Debug = 30
 		}
 
 		private static Dictionary<int, string> LayerNamesMap = new Dictionary<int, string>() {
@@ -20,7 +20,7 @@ namespace ReadOnlyData {
 			[(int)Layers.Water] = "Water",
 			[(int)Layers.UI] = "UI",
 			[(int)Layers.Ground] = "Ground",
-			[(int)Layers.Seeds] = "Seeds"
+			[(int)Layers.Debug] = "Debug"
 		};
 
 		public static string GetLayerName(Layers layer) {
