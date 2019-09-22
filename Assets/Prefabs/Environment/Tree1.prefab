@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1393043986471666914}
   - component: {fileID: 1158567238}
+  - component: {fileID: 1019684408}
   m_Layer: 0
   m_Name: Tree1
   m_TagString: Untagged
@@ -44,13 +45,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb6f8aeabc9b7ae4990c205ec643d9f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minFruitSpawnTime: 2
-  maxFruitSpawnTime: 5
+  minFruitSpawnTime: 3
+  maxFruitSpawnTime: 7
   fruitPrefab: {fileID: 2499616607044092583, guid: 23fab281eb17a5f46873d94006031bd8,
     type: 3}
-  maxSpawnedFruitAmount: 5
+  maxSpawnedFruitAmount: 10
   spawnedFruitAmount: 0
   treeLeaves: {fileID: 1086642795023366161}
+--- !u!64 &1019684408
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393043986471666915}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 0}
+--- !u!64 &1069736214
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906914140264461050}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 0}
+--- !u!64 &384622543
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260183558201282378}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 5668788170693331272, guid: 01d00cf352db12c4d875b827f46342d9, type: 3}
 --- !u!1001 &1393043986680961956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -156,9 +199,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1393043986680961956}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1906914140264461050 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8564810276086666914, guid: 01d00cf352db12c4d875b827f46342d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1393043986680961956}
+  m_PrefabAsset: {fileID: 0}
 --- !u!33 &1086642795023366161 stripped
 MeshFilter:
   m_CorrespondingSourceObject: {fileID: -7187303012656340043, guid: 01d00cf352db12c4d875b827f46342d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1393043986680961956}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2260183558201282378 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 867187950504957166, guid: 01d00cf352db12c4d875b827f46342d9,
     type: 3}
   m_PrefabInstance: {fileID: 1393043986680961956}
   m_PrefabAsset: {fileID: 0}

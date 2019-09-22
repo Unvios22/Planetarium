@@ -192,26 +192,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!1 &384622539 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2260183558201282378, guid: 15d96bc3fa587ca40aaa0d8bfda223d5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1393043987629937063}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &384622543
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 384622539}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 5668788170693331272, guid: 01d00cf352db12c4d875b827f46342d9, type: 3}
 --- !u!43 &477330471
 Mesh:
   m_ObjectHideFlags: 0
@@ -462,26 +442,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2f481b2175aed46b166e7d96863564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1019684407 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1393043986471666915, guid: 15d96bc3fa587ca40aaa0d8bfda223d5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1393043987629937063}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1019684408
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1019684407}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 0}
 --- !u!1001 &1040392575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -606,26 +566,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.0000008
   m_Center: {x: -0.0000005066395, y: 0, z: 0.000000834465}
---- !u!1 &1069736210 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1906914140264461050, guid: 15d96bc3fa587ca40aaa0d8bfda223d5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1393043987629937063}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1069736214
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1069736210}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 477330471}
 --- !u!4 &1158567237 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1393043986471666914, guid: 15d96bc3fa587ca40aaa0d8bfda223d5,
@@ -792,20 +732,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1158567238, guid: 15d96bc3fa587ca40aaa0d8bfda223d5, type: 3}
-      propertyPath: minFruitSpawnTime
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1158567238, guid: 15d96bc3fa587ca40aaa0d8bfda223d5, type: 3}
-      propertyPath: maxFruitSpawnTime
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1158567238, guid: 15d96bc3fa587ca40aaa0d8bfda223d5, type: 3}
-      propertyPath: maxSpawnedFruitAmount
-      value: 3000
-      objectReference: {fileID: 0}
     - target: {fileID: 1086642795023366161, guid: 15d96bc3fa587ca40aaa0d8bfda223d5,
         type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 477330471}
+    - target: {fileID: 1069736214, guid: 15d96bc3fa587ca40aaa0d8bfda223d5, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 477330471}
@@ -822,11 +754,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3533849732147643573, guid: 8a0bf59873e8f7b40b14be0f8df329b3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3533849732147643569, guid: 8a0bf59873e8f7b40b14be0f8df329b3,
         type: 3}
@@ -893,11 +820,6 @@ PrefabInstance:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 963194229}
-    - target: {fileID: 3533849732147643572, guid: 8a0bf59873e8f7b40b14be0f8df329b3,
-        type: 3}
-      propertyPath: moveSpeed
-      value: 120
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a0bf59873e8f7b40b14be0f8df329b3, type: 3}
 --- !u!1001 &5725679811518070401

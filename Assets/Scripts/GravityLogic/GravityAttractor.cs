@@ -3,25 +3,26 @@ namespace UnityEngine {
 	public class GravityAttractor : MonoBehaviour {
 
 		[SerializeField] private float attractionForce = 4;
-		private List<Rigidbody> _attractedBodies = new List<Rigidbody>();
+		private List<GravityBody> _attractedBodies = new List<GravityBody>();
 
 		private void FixedUpdate() {
-			foreach (var attractedRigidbody in _attractedBodies) {
+			foreach (var attractedBody in _attractedBodies) {
+				var attractedRigidbody = attractedBody.Rigidbody;
 				var attractorPosition = transform.position;
 				var rigidbodyPosition = attractedRigidbody.position;
 				
 				var forceVector = (attractorPosition - rigidbodyPosition).normalized;
 				
-				attractedRigidbody.AddForce(forceVector * attractionForce);
+				attractedRigidbody.AddForce(attractedBody.gravityMultiplier * attractionForce * forceVector);
 			}
 		}
 
-		public void AddAttractedRigidbody(Rigidbody attractedRigidbody) {
-			_attractedBodies.Add(attractedRigidbody);
+		public void AddAttractedBody(GravityBody attractedBody) {
+			_attractedBodies.Add(attractedBody);
 		}
 
-		public void RemoveAttractedRigidbody(Rigidbody attractedRigidbody) {
-			_attractedBodies.Remove(attractedRigidbody);
+		public void RemoveAttractedBody(GravityBody attractedBody) {
+			_attractedBodies.Remove(attractedBody);
 		}
 	}
 }

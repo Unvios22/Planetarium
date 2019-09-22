@@ -13,6 +13,10 @@ public class FruitSpawner : MonoBehaviour {
 
 	[SerializeField] private MeshFilter treeLeaves;
 
+	public void FruitDestroyed() {
+		spawnedFruitAmount--;
+	}
+	
 	private void OnEnable() {
 		StartCoroutine(SpawnFruit());
 	}

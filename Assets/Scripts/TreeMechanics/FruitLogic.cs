@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(AudioSource))]
 public class FruitLogic : MonoBehaviour {
 	private enum FruitState {
 		Growing,
@@ -23,20 +25,31 @@ public class FruitLogic : MonoBehaviour {
 	[SerializeField] private float minOverRipeningTime;
 	[SerializeField] private float maxOverRipeningTime;
 	[SerializeField] private Vector3 overRipeStageSizeScale;
+	[SerializeField] private float overRipeStageGravityMultiplier;
+
+	[SerializeField] private AudioClip[] _soundOnPop;
 
 	private Transform _fruitTransform;
 	private Rigidbody _rigidbody;
 	private Collider _collider;
+	private Renderer _renderer;
 	private Material _fruitMaterial;
+	private FruitSpawner _parentTreeFruitSpawner;
+	private AudioSource _audioSource;
+	private GravityBody _gravityBodyScript;
 
-	private void Awake() {
+	private void Start() {
+		//load all references
 		_fruitTransform = transform;
 		_rigidbody = _fruitTransform.GetComponent<Rigidbody>();
 		_collider = _fruitTransform.GetComponent<Collider>();
-		_fruitMaterial = _fruitTransform.GetComponent<Renderer>().material;
-	}
-
-	private void OnEnable() {
+		_renderer = _fruitTransform.GetComponent<Renderer>();
+		_fruitMaterial = _renderer.material;
+		_parentTreeFruitSpawner = _fruitTransform.GetComponentInParent<FruitSpawner>();
+		_audioSource = gameObject.GetComponent<AudioSource>();
+		_gravityBodyScript = gameObject.GetComponent<GravityBody>();
+		
+		//fruit is growing on tree
 		_rigidbody.isKinematic = true;
 		_collider.enabled = false;
 		_fruitTransform.localScale = Vector3.zero;
@@ -66,15 +79,35 @@ public class FruitLogic : MonoBehaviour {
 	private IEnumerator OverRipening() {
 		var timeToOverRipen = Random.Range(minOverRipeningTime, maxOverRipeningTime);
 		float timeOverRipening = 0;
+		float baseGravityMultiplier = _gravityBodyScript.gravityMultiplier;
 		while (timeOverRipening < timeToOverRipen) {
 			var lerpRatio = timeOverRipening / timeToOverRipen;
 			_fruitMaterial.color = Color.Lerp(ripeColor, overRipeColor, lerpRatio);
-			_fruitTransform.localScale = Vector3.Lerp(ripeStageSizeScale, overRipeStageSizeScale, lerpRatio);
+			_fruitTransform.localScale = Vector3.Slerp(ripeStageSizeScale, overRipeStageSizeScale, lerpRatio);
+			_gravityBodyScript.gravityMultiplier =
+				Mathf.Lerp(baseGravityMultiplier, overRipeStageGravityMultiplier, lerpRatio);
 			timeOverRipening += Time.deltaTime;
 			yield return null;
 		}
 
 		fruitState = FruitState.Overripe;
+		StartCoroutine(DestroyFruit());
+	}
+
+	private IEnumerator DestroyFruit() {
+		//play random sound from provided sounds array
+		_audioSource.clip = _soundOnPop[Random.Range(0, _soundOnPop.Length)];
+		_audioSource.Play();
+		
+		//make object invisible
+		_rigidbody.velocity = Vector3.zero;
+		_rigidbody.isKinematic = true;
+		_renderer.enabled = false;
+		_parentTreeFruitSpawner.FruitDestroyed();
+		
+		//let audio finish playing
+		yield return new WaitForSeconds(_audioSource.clip.length);
+		Destroy(gameObject);
 	}
 	
 }
