@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour {
 	private void FixedUpdate() {
 		//apply player movement in physics
 		_rigidbody.AddForce(_moveVector,ForceMode.VelocityChange);
-		//TODO: Fix player sliding
+		//TODO: Fix player sliding && fyling off randomly
 		
 		if (Input.GetKey(KeyCode.Space) && _isGrounded && canJump) {
 			_rigidbody.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
