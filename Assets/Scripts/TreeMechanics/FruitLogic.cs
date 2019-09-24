@@ -27,7 +27,7 @@ public class FruitLogic : MonoBehaviour {
 	[SerializeField] private Vector3 overRipeStageSizeScale;
 	[SerializeField] private float overRipeStageGravityMultiplier;
 
-	[SerializeField] private AudioClip[] _soundOnPop;
+	[SerializeField] private AudioClip[] soundOnPop;
 
 	private Transform _fruitTransform;
 	private Rigidbody _rigidbody;
@@ -68,11 +68,13 @@ public class FruitLogic : MonoBehaviour {
 			yield return null;
 		}
 
-		//clear parent & activate rb so that fruit falls from tree
+		//fruit is fully ripe - clear parent & activate rb so that fruit falls from tree
 		_fruitTransform.parent = null;
 		_rigidbody.isKinematic = false;
 		_collider.enabled = true;
 		fruitState = FruitState.Ripe;
+		
+		//start overripening
 		yield return StartCoroutine(OverRipening());
 	}
 
@@ -96,7 +98,7 @@ public class FruitLogic : MonoBehaviour {
 
 	private IEnumerator DestroyFruit() {
 		//play random sound from provided sounds array, using a random pitch
-		_audioSource.clip = _soundOnPop[Random.Range(0, _soundOnPop.Length)];
+		_audioSource.clip = soundOnPop[Random.Range(0, soundOnPop.Length)];
 		_audioSource.pitch = Random.Range(0.6f, 1.2f);
 		_audioSource.Play();
 		

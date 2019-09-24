@@ -148,7 +148,7 @@ MonoBehaviour:
   maxOverRipeningTime: 40
   overRipeStageSizeScale: {x: 2, y: 2, z: 2}
   overRipeStageGravityMultiplier: -0.18
-  _soundOnPop:
+  soundOnPop:
   - {fileID: 8300000, guid: da0d943bce5727043a99039b618f16de, type: 3}
 --- !u!82 &6672309779923645464
 AudioSource:
