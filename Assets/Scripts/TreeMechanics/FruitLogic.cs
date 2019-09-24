@@ -95,8 +95,9 @@ public class FruitLogic : MonoBehaviour {
 	}
 
 	private IEnumerator DestroyFruit() {
-		//play random sound from provided sounds array
+		//play random sound from provided sounds array, using a random pitch
 		_audioSource.clip = _soundOnPop[Random.Range(0, _soundOnPop.Length)];
+		_audioSource.pitch = Random.Range(0.6f, 1.2f);
 		_audioSource.Play();
 		
 		//make object invisible

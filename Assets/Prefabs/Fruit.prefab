@@ -150,8 +150,6 @@ MonoBehaviour:
   overRipeStageGravityMultiplier: -0.18
   _soundOnPop:
   - {fileID: 8300000, guid: da0d943bce5727043a99039b618f16de, type: 3}
-  - {fileID: 8300000, guid: f7789f71897db8c43b470ea71e0ec8a1, type: 3}
-  - {fileID: 8300000, guid: 9fd429b5ab921f641926cf713e4ccd4c, type: 3}
 --- !u!82 &6672309779923645464
 AudioSource:
   m_ObjectHideFlags: 0
