@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Planets/FruitTreePlanet.unity
     guid: ac57c38db96544c49bcc240a81408511
+  - enabled: 1
+    path: Assets/Scenes/Testing/PlanetGravityTest.unity
+    guid: bd53b4da5c0490e49a1819fed5a49287
   m_configObjects: {}
