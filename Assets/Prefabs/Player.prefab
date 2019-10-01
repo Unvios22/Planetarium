@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 3533849732147643571}
   - component: {fileID: 3533849732147643572}
   - component: {fileID: 3533849732147643568}
+  - component: {fileID: 85019649}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -263,6 +264,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityMultiplier: 1
+--- !u!114 &85019649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3533849732147643573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9036212a0d7102468775b8dc86a74be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCameraTransform: {fileID: 0}
+  traversalTargets:
+  - {fileID: 0}
+  traversalLookDegreeOffset: 10
+  currentTarget: {fileID: 0}
+  traversalProgressMax: 100
+  traversalProgressSpeed: 10
+  traversalDecreaseSpeed: 3
 --- !u!1 &3533849733233023918
 GameObject:
   m_ObjectHideFlags: 0
