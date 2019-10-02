@@ -43,6 +43,7 @@ public class PlanetTraversal : MonoBehaviour {
 			if (playerLookOffset < _traversalLookOffsetInternal) {
 				//increase target's traversal progress meter
 				traversalProgressMeter += traversalProgressSpeed * Time.deltaTime;
+				currentTarget = traversalTarget.transform;
 			}
 			else if (traversalProgressMeter > 0){
 				//decrease target's traversal progress meter
