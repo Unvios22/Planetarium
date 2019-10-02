@@ -39,6 +39,8 @@ public class PlanetTraversal : MonoBehaviour {
 			Debug.DrawLine(targetTransform.position, playerCameraTransform.position, Color.magenta);
 			Debug.Log("Internal look offset: " + playerLookOffset);
 
+			//TODO: Test of player has a line of sight to the target
+			
 			var traversalProgressMeter = _traversalTargetsInternal[traversalTarget];
 			if (playerLookOffset < _traversalLookOffsetInternal) {
 				//increase target's traversal progress meter

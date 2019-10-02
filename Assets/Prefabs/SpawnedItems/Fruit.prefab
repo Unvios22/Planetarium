@@ -141,12 +141,12 @@ MonoBehaviour:
   growingColor: {r: 0.87214434, g: 1, b: 0, a: 0}
   ripeColor: {r: 1, g: 0.018101081, b: 0, a: 0}
   overRipeColor: {r: 0.7830189, g: 0.46402323, b: 0.24007656, a: 0}
-  minRipeningTime: 6
-  maxRipeningTime: 20
-  ripeStageSizeScale: {x: 0.6, y: 0.6, z: 0.6}
-  minOverRipeningTime: 18
-  maxOverRipeningTime: 40
-  overRipeStageSizeScale: {x: 2, y: 2, z: 2}
+  minRipeningTime: 14
+  maxRipeningTime: 24
+  ripeStageSizeScale: {x: 0.4, y: 0.4, z: 0.4}
+  minOverRipeningTime: 40
+  maxOverRipeningTime: 50
+  overRipeStageSizeScale: {x: 1.2, y: 1.2, z: 1.2}
   overRipeStageGravityMultiplier: -0.18
   soundOnPop:
   - {fileID: 8300000, guid: da0d943bce5727043a99039b618f16de, type: 3}

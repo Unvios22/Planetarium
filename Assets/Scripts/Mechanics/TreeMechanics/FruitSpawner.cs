@@ -22,7 +22,11 @@ public class FruitSpawner : MonoBehaviour {
 	}
 
 	private IEnumerator SpawnFruit() {
-		while (spawnedFruitAmount < maxSpawnedFruitAmount) {
+		for (;;) {
+			if (spawnedFruitAmount >= maxSpawnedFruitAmount) {
+				yield return null;
+				continue;
+			}
 			var timeToWait = Random.Range(minFruitSpawnTime, maxFruitSpawnTime);
 			yield return new WaitForSeconds(timeToWait);
 			InstantiateFruit();
