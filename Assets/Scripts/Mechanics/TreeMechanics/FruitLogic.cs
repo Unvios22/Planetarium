@@ -6,13 +6,13 @@ using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(AudioSource))]
 public class FruitLogic : MonoBehaviour {
-	private enum FruitState {
+	public enum FruitState {
 		Growing,
 		Ripe,
 		Overripe
 	}
 	
-	[SerializeField] private FruitState fruitState;
+	[SerializeField] public FruitState fruitState;
 	
 	[SerializeField] private Color growingColor;
 	[SerializeField] private Color ripeColor;
@@ -26,6 +26,7 @@ public class FruitLogic : MonoBehaviour {
 	[SerializeField] private float maxOverRipeningTime;
 	[SerializeField] private Vector3 overRipeStageSizeScale;
 	[SerializeField] private float overRipeStageGravityMultiplier;
+	[SerializeField] private float foodAmount;
 
 	[SerializeField] private AudioClip[] soundOnPop;
 
@@ -37,6 +38,13 @@ public class FruitLogic : MonoBehaviour {
 	private FruitSpawner _parentTreeFruitSpawner;
 	private AudioSource _audioSource;
 	private GravityBody _gravityBodyScript;
+
+	public void BeEaten(float amountEaten) {
+		foodAmount -= amountEaten;
+		if (foodAmount <= 0) {
+			StartCoroutine(DestroyFruit());
+		}
+	}
 
 	private void Start() {
 		//load all references
