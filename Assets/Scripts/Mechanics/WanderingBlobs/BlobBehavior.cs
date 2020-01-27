@@ -23,7 +23,7 @@ public class BlobBehavior : MonoBehaviour {
 
 	private void Start() {
 		_rigidbody = GetComponent<Rigidbody>();
-		StartCoroutine(Wander());
+		// StartCoroutine(Wander());
 	}
 
 	private void Update() {
@@ -91,10 +91,12 @@ public class BlobBehavior : MonoBehaviour {
 	}
 
 	private IEnumerator EatFood(FruitLogic targetFoodScript) {
-		blobState = BlobState.Eating;
-		var distanceToFood = Vector3.Distance(blobPositon, foodPosition);
-		while (expression) {
-			
-		}
+		// blobState = BlobState.Eating;
+		// var distanceToFood = Vector3.Distance(blobPositon, foodPosition);
+		// while (expression) {
+		// 	
+		// }
+		//TODO: implement;
+		return null;
 	}
 }
