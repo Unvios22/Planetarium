@@ -40,7 +40,7 @@ public class PlanetTraversal : MonoBehaviour {
 				//increase target's traversal progress meter
 				traversalProgressMeter += traversalProgressSpeed * Time.deltaTime;
 				currentTarget = traversalTarget.transform;
-			} else {
+			} else if (traversalProgressMeter > 0) {
 				//decrease target's traversal progress meter
 				traversalProgressMeter -= traversalDecreaseSpeed * Time.deltaTime;
 			}
