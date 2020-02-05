@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ReadOnlyData {
 	public static class PhysicsLayers {
@@ -10,6 +11,8 @@ namespace ReadOnlyData {
 			Water = 4,
 			UI = 5,
 			Ground = 8,
+			Seeds = 9,
+			Boids = 10,
 			Debug = 30
 		}
 
@@ -20,6 +23,8 @@ namespace ReadOnlyData {
 			[(int)Layers.Water] = "Water",
 			[(int)Layers.UI] = "UI",
 			[(int)Layers.Ground] = "Ground",
+			[(int)Layers.Seeds] = "Seeds",
+			[(int)Layers.Boids] = "Boids",
 			[(int)Layers.Debug] = "Debug"
 		};
 
@@ -28,8 +33,15 @@ namespace ReadOnlyData {
 		}
 
 		public static int GetLayerMask(int[] fromLayers) {
-			//TODO: Add simplified method to get LayerMask.GetMask() value
 			throw new NotImplementedException();
+		}
+		
+		public static int GetLayerMask(Layers[] fromLayers) {
+			var layersNames = new string[fromLayers.Length];
+			for (int i = 0; i < fromLayers.Length; i++) {
+				layersNames[i] = GetLayerName(fromLayers[i]);
+			}
+			return LayerMask.GetMask(layersNames);
 		}
 
 	}
