@@ -25,7 +25,7 @@ public class BoidBehavior : MonoBehaviour {
 		if (separationBehavior) {ApplySeparationBehavior(boid);}
 		if (alignmentBehavior) {ApplyAlignmentBehavior(boid);}
 		if (cohesionBehavior) {ApplyCohesionBehavior(boid);}
-		if (moveForwards) {ApplyForwardsMotion();}
+		if (moveForwards) {ApplyForwardsMotion(boid);}
 	}
 
 	private void ApplySeparationBehavior(BoidAgent boid) {
