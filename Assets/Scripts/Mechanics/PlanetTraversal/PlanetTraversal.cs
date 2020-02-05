@@ -29,7 +29,7 @@ public class PlanetTraversal : MonoBehaviour {
 	private void CheckPlayerLookAtTargets() {
 		for (int i = 0; i < _traversalTargetsInternal.Count; i++) {
 			var traversalTarget = _traversalTargetsInternal.Keys.ElementAt(i);
-			//TODO: dictionary keyCollection can't be accesed through indexing. Check how LINQ does it shenanigans ^^^^
+			//TODO: dictionary keyCollection can't be accessed through indexing. Check how LINQ does it shenanigans ^^^^
 			var targetTransform = traversalTarget.transform;
 			Debug.DrawLine(targetTransform.position, playerCameraTransform.position, Color.magenta);
 			
