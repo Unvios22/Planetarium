@@ -614,7 +614,7 @@ PrefabInstance:
     - target: {fileID: 705687044951318999, guid: db82346e7bc65df49bdb161b6d289114,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.35
+      value: 3.17
       objectReference: {fileID: 0}
     - target: {fileID: 705687044951318999, guid: db82346e7bc65df49bdb161b6d289114,
         type: 3}
@@ -976,7 +976,7 @@ PrefabInstance:
     - target: {fileID: 705687044951318999, guid: db82346e7bc65df49bdb161b6d289114,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.314991
+      value: 23.71
       objectReference: {fileID: 0}
     - target: {fileID: 705687044951318999, guid: db82346e7bc65df49bdb161b6d289114,
         type: 3}
@@ -1088,9 +1088,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boidSettings: {fileID: 11400000, guid: 338b8a2ba3e1d1e4ebbf01f1ad1cc0c7, type: 2}
-  separationBehavior: 1
+  separationBehavior: 0
+  cohesionBehavior: 1
   alignmentBehavior: 0
-  cohesionBehavior: 0
+  moveForwards: 0
 --- !u!4 &1945967222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 705687044951318999, guid: db82346e7bc65df49bdb161b6d289114,
@@ -1203,7 +1204,7 @@ PrefabInstance:
     - target: {fileID: 705687044951318999, guid: db82346e7bc65df49bdb161b6d289114,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 26.241285
+      value: 27.05
       objectReference: {fileID: 0}
     - target: {fileID: 705687044951318999, guid: db82346e7bc65df49bdb161b6d289114,
         type: 3}
