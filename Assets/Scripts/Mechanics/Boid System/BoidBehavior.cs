@@ -79,8 +79,9 @@ public class BoidBehavior : MonoBehaviour {
 	}
 
 	private Quaternion GetAverageAlignment(BoidAgent boid, Collider[] neighbouringBoids) {
-		Quaternion averageAlignmnent;
+		Quaternion averageAlignmnent = new Quaternion();
 		//TODO: continue scripting
+		return averageAlignmnent;
 	}
 
 	private void ApplyForwardsMotion(BoidAgent boid) {
