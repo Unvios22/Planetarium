@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - GravityAttractor
+  - BlobFood
+  - TraversalTarget
   layers:
   - Default
   - TransparentFX
@@ -13,6 +16,9 @@ TagManager:
   - UI
   - 
   - 
+  - Ground
+  - Seeds
+  - Boids
   - 
   - 
   - 
@@ -32,10 +38,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Debug
   - 
   m_SortingLayers:
   - name: Default
